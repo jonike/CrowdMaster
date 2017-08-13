@@ -17,10 +17,12 @@
 # along with CrowdMaster.  If not, see <http://www.gnu.org/licenses/>.
 # ##### END GPL LICENSE BLOCK #####
 
+import os
 import unittest
 
 import bpy
 from bpy.types import Operator
+import bmesh
 
 from .cm_syncManager import SyncManagerTestCase
 
@@ -60,6 +62,69 @@ class AddonRegisterTestCase(unittest.TestCase):
             self.assertIn(op, dir(bpy.ops.scene))
 
 
+class SimpleSimRunTestCase(unittest.TestCase):
+    def testSimpleGen(self):
+        testfile = os.path.join(os.path.dirname(
+            os.path.realpath(__file__)), "cm_testBase.blend")
+
+        bpy.ops.wm.open_mainfile(filepath=testfile)
+
+        scene = bpy.context.scene
+
+        ng = bpy.data.node_groups.new("simpleGen", "CrowdMasterAGenTreeType")
+        
+        object_node = ng.nodes.new("ObjectInputNodeType")
+        object_node.location = (-1200, 0)
+        object_node.inputObject = "Cube"
+        
+        template_node = ng.nodes.new("TemplateNodeType")
+        template_node.location = (-800, 0)
+        template_node.brainType = "simpleSim"
+        
+        rand_node = ng.nodes.new("RandomPositionNodeType")
+        rand_node.location = (-400, 0)
+        rand_node.noToPlace = 25
+        rand_node.radius = 25.00
+        
+        gen_node = ng.nodes.new("GenerateNodeType")
+        gen_node.location = (0, 0)
+        
+        links = ng.links
+        links.new(object_node.outputs[0], template_node.inputs[0])
+        links.new(template_node.outputs[0], rand_node.inputs[0])
+        links.new(rand_node.outputs[0], gen_node.inputs[0])
+
+        bpy.ops.scene.cm_agent_nodes_generate(nodeName="Generate", nodeTreeName="simpleGen")
+
+    def testSimpleSim(self):
+        scene = bpy.context.scene
+
+        ng = bpy.data.node_groups.new("simpleSim", "CrowdMasterTreeType")
+
+        input_node = ng.nodes.new("NewInputNode")
+        input_node.location = (-300, 0)
+        input_node.InputSource = "CONSTANT"
+        input_node.Constant = 0.1
+
+        output_node = ng.nodes.new("OutputNode")
+        output_node.location = (0, 0)
+        output_node.Output = 'py'
+        links = ng.links
+        links.new(input_node.outputs[0], output_node.inputs[0])
+
+        bpy.context.scene.cm_sim_start_frame = 1
+        bpy.context.scene.cm_sim_end_frame = 50
+
+        bpy.context.scene.frame_start = 1
+        bpy.context.scene.frame_end = 50
+
+        bpy.context.user_preferences.addons[__package__].preferences.play_animation = False
+        bpy.context.user_preferences.addons[__package__].preferences.ask_to_save = False
+
+        bpy.ops.scene.cm_start()
+        bpy.ops.screen.animation_play()
+
+
 def createShortTestSuite():
     """Gather all the short tests from this module in a test suite"""
     test_suite = unittest.TestSuite()
@@ -71,6 +136,7 @@ def createShortTestSuite():
 def createLongTestSuite():
     """Gather all the long tests from this module in a test suite"""
     test_suite = unittest.TestSuite()
+    test_suite.addTest(unittest.makeSuite(SimpleSimRunTestCase))
     return test_suite
 
 
