@@ -66,8 +66,9 @@ class SimpleSimRunTestCase(unittest.TestCase):
     def testSimpleGen(self):
         testfile = os.path.join(os.path.dirname(
             os.path.realpath(__file__)), "cm_testBase.blend")
-
-        bpy.ops.wm.open_mainfile(filepath=testfile)
+    
+        with bpy.data.libraries.load(testfile) as (data_from, data_to):
+            data_to.scenes = ["Scene"]
 
         scene = bpy.context.scene
 
@@ -118,11 +119,10 @@ class SimpleSimRunTestCase(unittest.TestCase):
         bpy.context.scene.frame_start = 1
         bpy.context.scene.frame_end = 50
 
-        bpy.context.user_preferences.addons[__package__].preferences.play_animation = False
+        bpy.context.user_preferences.addons[__package__].preferences.play_animation = True
         bpy.context.user_preferences.addons[__package__].preferences.ask_to_save = False
 
         bpy.ops.scene.cm_start()
-        bpy.ops.screen.animation_play()
 
 
 def createShortTestSuite():

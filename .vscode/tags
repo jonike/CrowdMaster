@@ -10,7 +10,7 @@ ActionManager	../cm_actions\cm_motion.py	/^class ActionManager:$/;"	kind:class	l
 ActionState	../cm_bpyNodes.py	/^class ActionState(StateNode):$/;"	kind:class	line:777
 AddToGroupNode	../cm_generation\cm_genNodes.py	/^class AddToGroupNode(CrowdMasterAGenTreeNode):$/;"	kind:class	line:97
 AddonPreferences	../cm_prefs.py	/^from bpy.types import AddonPreferences, Operator$/;"	kind:namespace	line:25
-AddonRegisterTestCase	../cm_tests.py	/^class AddonRegisterTestCase(unittest.TestCase):$/;"	kind:class	line:28
+AddonRegisterTestCase	../cm_tests.py	/^class AddonRegisterTestCase(unittest.TestCase):$/;"	kind:class	line:30
 Agent	../cm_agent.py	/^class Agent:$/;"	kind:class	line:33
 Agent	../cm_simulate.py	/^from .cm_agent import Agent$/;"	kind:namespace	line:28
 AgentInfo	../cm_channels\__init__.py	/^from .cm_agentInfoChannels import AgentInfo$/;"	kind:namespace	line:20
@@ -51,8 +51,8 @@ CrowdMasterAGenTree	../cm_generation\cm_genNodes.py	/^class CrowdMasterAGenTree(
 CrowdMasterAGenTreeNode	../cm_generation\cm_genNodes.py	/^class CrowdMasterAGenTreeNode(Node):$/;"	kind:class	line:68
 CrowdMasterNode	../cm_bpyNodes.py	/^class CrowdMasterNode(Node):$/;"	kind:class	line:114
 CrowdMasterTree	../cm_bpyNodes.py	/^class CrowdMasterTree(NodeTree):$/;"	kind:class	line:33
-CrowdMaster_run_long_tests	../cm_tests.py	/^class CrowdMaster_run_long_tests(Operator):$/;"	kind:class	line:92
-CrowdMaster_run_short_tests	../cm_tests.py	/^class CrowdMaster_run_short_tests(Operator):$/;"	kind:class	line:77
+CrowdMaster_run_long_tests	../cm_tests.py	/^class CrowdMaster_run_long_tests(Operator):$/;"	kind:class	line:158
+CrowdMaster_run_short_tests	../cm_tests.py	/^class CrowdMaster_run_short_tests(Operator):$/;"	kind:class	line:143
 Crowdmaster_place_deferred_geo	../cm_utilities.py	/^class Crowdmaster_place_deferred_geo(Operator):$/;"	kind:class	line:36
 Crowdmaster_switch_dupli_group	../cm_utilities.py	/^class Crowdmaster_switch_dupli_group(Operator):$/;"	kind:class	line:128
 CurveType	../cm_bpyNodes.py	/^    CurveType = EnumProperty(name="Curve Type",$/;"	kind:variable	line:406
@@ -195,7 +195,7 @@ Operator	../cm_events\cm_eventsMenu.py	/^from bpy.types import Operator, Panel, 
 Operator	../cm_generation\__init__.py	/^from bpy.types import Operator$/;"	kind:namespace	line:24
 Operator	../cm_generation\cm_genNodes.py	/^from bpy.types import (Node, NodeSocket, NodeTree, Operator, PropertyGroup,$/;"	kind:namespace	line:28
 Operator	../cm_prefs.py	/^from bpy.types import AddonPreferences, Operator$/;"	kind:namespace	line:25
-Operator	../cm_tests.py	/^from bpy.types import Operator$/;"	kind:namespace	line:23
+Operator	../cm_tests.py	/^from bpy.types import Operator$/;"	kind:namespace	line:24
 Operator	../cm_utilities.py	/^from bpy.types import Operator$/;"	kind:namespace	line:24
 OrNode	../cm_bpyNodes.py	/^class OrNode(LogicNode):$/;"	kind:class	line:497
 OrderedDict	../cm_generation\cm_templates.py	/^from collections import OrderedDict$/;"	kind:namespace	line:24
@@ -275,6 +275,7 @@ SetTagNode	../cm_bpyNodes.py	/^class SetTagNode(LogicNode):$/;"	kind:class	line:
 SettagNode	../cm_generation\cm_genNodes.py	/^class SettagNode(CrowdMasterAGenTreeNode):$/;"	kind:class	line:1047
 SimNoteClear	../cm_bpyNodes.py	/^class SimNoteClear(Operator):$/;"	kind:class	line:929
 SimNoteTextFromClipboard	../cm_bpyNodes.py	/^class SimNoteTextFromClipboard(Operator):$/;"	kind:class	line:913
+SimpleSimRunTestCase	../cm_tests.py	/^class SimpleSimRunTestCase(unittest.TestCase):$/;"	kind:class	line:65
 Simulation	../__init__.py	/^    from .cm_simulate import Simulation$/;"	kind:namespace	line:545
 Simulation	../cm_simulate.py	/^class Simulation:$/;"	kind:class	line:34
 SingleOutput	../cm_bpyNodes.py	/^    SingleOutput = BoolProperty(name="Single Output", default=False)$/;"	kind:variable	line:483
@@ -304,7 +305,7 @@ StrongNode	../cm_bpyNodes.py	/^class StrongNode(LogicNode):$/;"	kind:class	line:
 Switch_Connected_Path	../cm_channels\cm_pathChannels.py	/^class Switch_Connected_Path(Operator):$/;"	kind:class	line:670
 Switch_Selected_Path	../cm_channels\cm_pathChannels.py	/^class Switch_Selected_Path(Operator):$/;"	kind:class	line:636
 SyncManagerTestCase	../cm_syncManager.py	/^class SyncManagerTestCase(unittest.TestCase):$/;"	kind:class	line:121
-SyncManagerTestCase	../cm_tests.py	/^from .cm_syncManager import SyncManagerTestCase$/;"	kind:namespace	line:25
+SyncManagerTestCase	../cm_tests.py	/^from .cm_syncManager import SyncManagerTestCase$/;"	kind:namespace	line:27
 TEXT_WIDTH	../cm_bpyNodes.py	/^TEXT_WIDTH = 6$/;"	kind:variable	line:832
 TEXT_WIDTH	../cm_generation\cm_genNodes.py	/^TEXT_WIDTH = 6$/;"	kind:variable	line:1071
 TW	../cm_bpyNodes.py	/^TW = textwrap.TextWrapper()$/;"	kind:variable	line:833
@@ -635,8 +636,8 @@ bl_idname	../cm_generation\cm_genNodes.py	/^    bl_idname = 'TemplateSwitchNodeT
 bl_idname	../cm_generation\cm_genNodes.py	/^    bl_idname = 'VCOLPositionNodeType'$/;"	kind:variable	line:771
 bl_idname	../cm_prefs.py	/^    bl_idname = "scene.cm_save_prefs"$/;"	kind:variable	line:35
 bl_idname	../cm_prefs.py	/^    bl_idname = __package__$/;"	kind:variable	line:52
-bl_idname	../cm_tests.py	/^    bl_idname = "scene.cm_run_long_tests"$/;"	kind:variable	line:95
-bl_idname	../cm_tests.py	/^    bl_idname = "scene.cm_run_short_tests"$/;"	kind:variable	line:80
+bl_idname	../cm_tests.py	/^    bl_idname = "scene.cm_run_long_tests"$/;"	kind:variable	line:161
+bl_idname	../cm_tests.py	/^    bl_idname = "scene.cm_run_short_tests"$/;"	kind:variable	line:146
 bl_idname	../cm_utilities.py	/^    bl_idname = "scene.cm_place_deferred_geo"$/;"	kind:variable	line:37
 bl_idname	../cm_utilities.py	/^    bl_idname = "scene.cm_switch_dupli_groups"$/;"	kind:variable	line:129
 bl_info	../__init__.py	/^bl_info = {$/;"	kind:variable	line:20
@@ -739,8 +740,8 @@ bl_label	../cm_generation\cm_genNodes.py	/^    bl_label = 'Template'$/;"	kind:va
 bl_label	../cm_generation\cm_genNodes.py	/^    bl_label = 'Vertex Colors'$/;"	kind:variable	line:772
 bl_label	../cm_pieMenus.py	/^    bl_label = "Simulation Tools"$/;"	kind:variable	line:27
 bl_label	../cm_prefs.py	/^    bl_label = "Save Settings"$/;"	kind:variable	line:36
-bl_label	../cm_tests.py	/^    bl_label = "Run Long Tests"$/;"	kind:variable	line:96
-bl_label	../cm_tests.py	/^    bl_label = "Run Short Tests"$/;"	kind:variable	line:81
+bl_label	../cm_tests.py	/^    bl_label = "Run Long Tests"$/;"	kind:variable	line:162
+bl_label	../cm_tests.py	/^    bl_label = "Run Short Tests"$/;"	kind:variable	line:147
 bl_label	../cm_utilities.py	/^    bl_label = "Place Deferred Geometry"$/;"	kind:variable	line:38
 bl_label	../cm_utilities.py	/^    bl_label = "Switch Dupli Groups"$/;"	kind:variable	line:130
 bl_options	../__init__.py	/^    bl_options = {'DEFAULT_CLOSED'}$/;"	kind:variable	line:481
@@ -801,6 +802,7 @@ bl_width_default	../cm_generation\cm_genNodes.py	/^    bl_width_default = 450.0$
 blf	../libs\cm_draw.py	/^import blf$/;"	kind:namespace	line:2
 bmesh	../cm_channels\cm_pathChannels.py	/^import bmesh$/;"	kind:namespace	line:23
 bmesh	../cm_generation\cm_templates.py	/^import bmesh$/;"	kind:namespace	line:27
+bmesh	../cm_tests.py	/^import bmesh$/;"	kind:namespace	line:25
 boneName	../cm_generation\cm_genNodes.py	/^    boneName = StringProperty(name="Bone Name")$/;"	kind:variable	line:226
 boundingBoxFromBPY	../libs\ins_octree.py	/^def boundingBoxFromBPY(ob, overwriteRadii=None):$/;"	kind:function	line:40
 boundingRect	../libs\ins_clustering.py	/^        def boundingRect(self):$/;"	kind:member	line:190
@@ -837,7 +839,7 @@ bpy	../cm_nodeFunctions.py	/^import bpy$/;"	kind:namespace	line:27
 bpy	../cm_pieMenus.py	/^import bpy$/;"	kind:namespace	line:20
 bpy	../cm_prefs.py	/^import bpy$/;"	kind:namespace	line:23
 bpy	../cm_simulate.py	/^import bpy$/;"	kind:namespace	line:23
-bpy	../cm_tests.py	/^import bpy$/;"	kind:namespace	line:22
+bpy	../cm_tests.py	/^import bpy$/;"	kind:namespace	line:23
 bpy	../cm_translations.py	/^import bpy$/;"	kind:namespace	line:20
 bpy	../cm_utilities.py	/^import bpy$/;"	kind:namespace	line:22
 bpy	../libs\cm_draw.py	/^import bpy$/;"	kind:namespace	line:3
@@ -1037,11 +1039,11 @@ coreNumber	../cm_timings.py	/^coreNumber = OrderedDict([$/;"	kind:variable	line:
 coreTimes	../cm_timings.py	/^coreTimes = OrderedDict([$/;"	kind:variable	line:55
 createAgents	../cm_simulate.py	/^    def createAgents(self, group):$/;"	kind:member	line:102
 createDecorator	../cm_channels\cm_masterChannels.py	/^    def createDecorator(func):$/;"	kind:function	line:54
-createLongTestSuite	../cm_tests.py	/^def createLongTestSuite():$/;"	kind:function	line:71
+createLongTestSuite	../cm_tests.py	/^def createLongTestSuite():$/;"	kind:function	line:136
 createOctree	../libs\ins_octree.py	/^def createOctree(boundingBoxes):$/;"	kind:function	line:141
 createOctreeFromBPYObjs	../cm_generation\cm_templates.py	/^from ..libs.ins_octree import createOctreeFromBPYObjs$/;"	kind:namespace	line:33
 createOctreeFromBPYObjs	../libs\ins_octree.py	/^def createOctreeFromBPYObjs(objs, allSpheres=True, radii=None):$/;"	kind:function	line:170
-createShortTestSuite	../cm_tests.py	/^def createShortTestSuite():$/;"	kind:function	line:63
+createShortTestSuite	../cm_tests.py	/^def createShortTestSuite():$/;"	kind:function	line:128
 create_backup	../addon_updater.py	/^	def create_backup(self):$/;"	kind:member	line:571
 current_version	../addon_updater.py	/^	def current_version(self):$/;"	kind:member	line:301
 current_version	../addon_updater.py	/^	def current_version(self,tuple_values):$/;"	kind:member	line:317
@@ -1305,8 +1307,8 @@ execute	../cm_generation\cm_genNodes.py	/^    def execute(self, context):$/;"	ki
 execute	../cm_generation\cm_genNodes.py	/^    def execute(self, context):$/;"	kind:member	line:363
 execute	../cm_generation\cm_genNodes.py	/^    def execute(self, context):$/;"	kind:member	line:376
 execute	../cm_prefs.py	/^    def execute(self, context):$/;"	kind:member	line:39
-execute	../cm_tests.py	/^    def execute(self, context):$/;"	kind:member	line:83
-execute	../cm_tests.py	/^    def execute(self, context):$/;"	kind:member	line:98
+execute	../cm_tests.py	/^    def execute(self, context):$/;"	kind:member	line:149
+execute	../cm_tests.py	/^    def execute(self, context):$/;"	kind:member	line:164
 execute	../cm_utilities.py	/^    def execute(self, context):$/;"	kind:member	line:133
 execute	../cm_utilities.py	/^    def execute(self, context):$/;"	kind:member	line:41
 f	../libs\ins_octree.py	/^                    def f(x): return x.original$/;"	kind:function	line:338
@@ -1661,6 +1663,7 @@ os	../cm_generation\cm_templates.py	/^import os$/;"	kind:namespace	line:21
 os	../cm_iconLoad.py	/^import os$/;"	kind:namespace	line:20
 os	../cm_nodeFunctions.py	/^import os$/;"	kind:namespace	line:23
 os	../cm_prefs.py	/^import os$/;"	kind:namespace	line:21
+os	../cm_tests.py	/^import os$/;"	kind:namespace	line:20
 ot	../cm_channels\cm_soundChannels.py	/^from ..libs import ins_octree as ot$/;"	kind:namespace	line:25
 output_filepath	../cm_bpyNodes.py	/^    output_filepath = StringProperty($/;"	kind:variable	line:664
 over	../cm_channels\cm_soundChannels.py	/^    def over(self, minusRadius):$/;"	kind:member	line:428
@@ -1753,7 +1756,7 @@ register	../cm_generation\__init__.py	/^def register():$/;"	kind:function	line:1
 register	../cm_generation\cm_genNodes.py	/^def register():$/;"	kind:function	line:1227
 register	../cm_pieMenus.py	/^def register():$/;"	kind:function	line:45
 register	../cm_prefs.py	/^def register():$/;"	kind:function	line:225
-register	../cm_tests.py	/^def register():$/;"	kind:function	line:107
+register	../cm_tests.py	/^def register():$/;"	kind:function	line:173
 register	../cm_translations.py	/^def register():$/;"	kind:function	line:213
 register	../cm_utilities.py	/^def register():$/;"	kind:function	line:148
 registerAction	../cm_actions\cm_motion.py	/^    def registerAction(self, actionNode):$/;"	kind:member	line:27
@@ -1808,7 +1811,7 @@ separateTy	../cm_channels\cm_flockChannels.py	/^    def separateTy(self, inputs)
 separateTz	../cm_channels\cm_flockChannels.py	/^    def separateTz(self, inputs):$/;"	kind:member	line:155
 setIsSphere	../libs\ins_octree.py	/^    def setIsSphere(self, isSphere):$/;"	kind:member	line:100
 setStartState	../cm_brainClasses.py	/^    def setStartState(self, stateNode):$/;"	kind:member	line:296
-setUp	../cm_tests.py	/^    def setUp(self):$/;"	kind:member	line:29
+setUp	../cm_tests.py	/^    def setUp(self):$/;"	kind:member	line:31
 set_check_interval	../addon_updater.py	/^	def set_check_interval(self,enable=False,months=0,days=14,hours=0,minutes=0):$/;"	kind:member	line:327
 set_tag	../addon_updater.py	/^	def set_tag(self,name):$/;"	kind:member	line:902
 set_updater_json	../addon_updater.py	/^	def set_updater_json(self):$/;"	kind:member	line:1008
@@ -1871,14 +1874,16 @@ targetMaterial	../cm_generation\cm_genNodes.py	/^    targetMaterial = StringProp
 targetObject	../cm_generation\cm_genNodes.py	/^    targetObject = StringProperty(name="Target Object",$/;"	kind:variable	line:971
 targetType	../cm_generation\cm_genNodes.py	/^    targetType = EnumProperty($/;"	kind:variable	line:963
 target_version	../addon_updater_ops.py	/^	def target_version(self, context):$/;"	kind:member	line:204
-tearDown	../cm_tests.py	/^    def tearDown(self):$/;"	kind:member	line:35
+tearDown	../cm_tests.py	/^    def tearDown(self):$/;"	kind:member	line:37
 tell	../cm_syncManager.py	/^    def tell(self, source, target, action, value, state):$/;"	kind:member	line:40
 templates	../cm_generation\__init__.py	/^from .cm_templates import TemplateRequest, templates, tmpPathChannel$/;"	kind:namespace	line:28
 templates	../cm_generation\cm_templates.py	/^templates = OrderedDict([$/;"	kind:variable	line:1357
 testCase	../cm_syncManager.py	/^    def testCase(self):$/;"	kind:member	line:122
 testCase2	../cm_syncManager.py	/^    def testCase2(self):$/;"	kind:member	line:147
-testRegistered	../cm_tests.py	/^    def testRegistered(self):$/;"	kind:member	line:43
-testStartStopSim	../cm_tests.py	/^    def testStartStopSim(self):$/;"	kind:member	line:38
+testRegistered	../cm_tests.py	/^    def testRegistered(self):$/;"	kind:member	line:45
+testSimpleGen	../cm_tests.py	/^    def testSimpleGen(self):$/;"	kind:member	line:66
+testSimpleSim	../cm_tests.py	/^    def testSimpleSim(self):$/;"	kind:member	line:99
+testStartStopSim	../cm_tests.py	/^    def testStartStopSim(self):$/;"	kind:member	line:40
 text	../cm_bpyNodes.py	/^    text = StringProperty($/;"	kind:variable	line:846
 text	../cm_generation\cm_genNodes.py	/^    text = StringProperty($/;"	kind:variable	line:1084
 text_file	../cm_bpyNodes.py	/^    text_file = StringProperty(description="Textfile to show")$/;"	kind:variable	line:849
@@ -1919,7 +1924,7 @@ to_text	../cm_generation\cm_genNodes.py	/^    def to_text(self):$/;"	kind:member
 totalAgents	../cm_blenderData.py	/^    totalAgents = IntProperty(default=0)$/;"	kind:variable	line:88
 translations	../cm_translations.py	/^translations = {$/;"	kind:variable	line:22
 unittest	../cm_syncManager.py	/^import unittest$/;"	kind:namespace	line:20
-unittest	../cm_tests.py	/^import unittest$/;"	kind:namespace	line:20
+unittest	../cm_tests.py	/^import unittest$/;"	kind:namespace	line:21
 unregister	../__init__.py	/^def unregister():$/;"	kind:function	line:594
 unregister	../addon_updater_ops.py	/^def unregister():$/;"	kind:function	line:979
 unregister	../cm_bpyNodes.py	/^def unregister():$/;"	kind:function	line:1020
@@ -1930,7 +1935,7 @@ unregister	../cm_generation\__init__.py	/^def unregister():$/;"	kind:function	li
 unregister	../cm_generation\cm_genNodes.py	/^def unregister():$/;"	kind:function	line:1271
 unregister	../cm_pieMenus.py	/^def unregister():$/;"	kind:function	line:54
 unregister	../cm_prefs.py	/^def unregister():$/;"	kind:function	line:231
-unregister	../cm_tests.py	/^def unregister():$/;"	kind:function	line:112
+unregister	../cm_tests.py	/^def unregister():$/;"	kind:function	line:178
 unregister	../cm_translations.py	/^def unregister():$/;"	kind:function	line:218
 unregister	../cm_utilities.py	/^def unregister():$/;"	kind:function	line:153
 unregisterAllTypes	../cm_blenderData.py	/^def unregisterAllTypes():$/;"	kind:function	line:124
