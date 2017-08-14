@@ -66,6 +66,8 @@ class SimpleSimRunTestCase(unittest.TestCase):
     def setUp(self):
         self.play_animation = bpy.context.user_preferences.addons[
             __package__].preferences.play_animation
+        self.ask_to_save = bpy.context.user_preferences.addons[
+            __package__].preferences.ask_to_save
 
         testfile = os.path.join(os.path.dirname(
             os.path.realpath(__file__)), "cm_testBase.blend")
@@ -79,6 +81,7 @@ class SimpleSimRunTestCase(unittest.TestCase):
 
     def tearDown(self):
         bpy.context.user_preferences.addons[__package__].preferences.play_animation = self.play_animation
+        bpy.context.user_preferences.addons[__package__].preferences.ask_to_save = self.ask_to_save
         bpy.data.scenes.remove(bpy.data.scenes["cmTesting"], do_unlink=True)
 
     def testSimpleGen(self):
@@ -131,10 +134,12 @@ class SimpleSimRunTestCase(unittest.TestCase):
         bpy.context.scene.frame_start = 1
         bpy.context.scene.frame_end = 50
 
-        bpy.context.user_preferences.addons[__package__].preferences.play_animation = True
         bpy.context.user_preferences.addons[__package__].preferences.ask_to_save = False
 
         bpy.ops.scene.cm_start()
+
+        for f in range(50):
+            bpy.context.scene.frame_set(f+1)
 
 
 def createShortTestSuite():
