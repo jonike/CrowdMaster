@@ -34,7 +34,7 @@ class Agent:
     """Represents each of the agents in the scene."""
 
     def __init__(self, blenderid, nodeGroup, sim, rigOverwrite, constrainBone,
-                 tags=None, modifyBones=None, freezeAnimation=False):
+                 tags=None, modifyBones=None, freezeAnimation=False, geoGroup=None):
         preferences = bpy.context.user_preferences.addons[__package__].preferences
         if preferences.show_debug_options:
             t = time.time()
@@ -50,6 +50,8 @@ class Agent:
 
         self.freezeAnimation = freezeAnimation
 
+        self.geoGroup = geoGroup
+
         self.rigOverwrite = rigOverwrite
         self.constrainBone = constrainBone
         self.modifyBones = {}
@@ -58,14 +60,6 @@ class Agent:
                 if m.name not in self.modifyBones:
                     self.modifyBones[m.name] = {}
                 self.modifyBones[m.name][m.attribute] = m.tag
-        for bone in bpy.context.scene.objects[self.rigOverwrite].pose.bones:
-            bone.keyframe_insert("location")
-            if bone.rotation_mode == "QUATERNION":
-                bone.keyframe_insert("rotation_quaternion")
-            elif bone.rotation_mode == "AXIS_ANGLE":
-                bone.keyframe_insert("rotation_axis_angle")
-            else:
-                bone.keyframe_insert("rotation_euler")
 
         objs = bpy.data.objects
 
@@ -112,8 +106,6 @@ class Agent:
 
         """Clear out the nla"""
         if not freezeAnimation:
-            objs = bpy.data.objects
-
             objs[blenderid].animation_data_clear()
             objs[blenderid].keyframe_insert(data_path="location", frame=1)
             objs[blenderid].keyframe_insert(
@@ -138,7 +130,7 @@ class Agent:
                 cm_timings.agent["brainExecute"] += time.time() - t
             if objs[self.id].select:
                 logger.debug("ID: ", self.id, "Tags: ", self.brain.tags,
-                      "outvars: ", self.brain.outvars)
+                             "outvars: ", self.brain.outvars)
             # TODO show this in the UI
         if preferences.show_debug_options:
             t = time.time()
@@ -215,19 +207,24 @@ class Agent:
         lastFrame = bpy.context.scene.frame_current - 1
         thisFrame = bpy.context.scene.frame_current - 1
 
-        for skNm in self.shapeKeys:
-            sk = obj.data.shape_keys.key_blocks.get(skNm)
-            if sk is not None:
-                skVal = self.shapeKeys[skNm]
-                if abs(sk.value - skVal) > 0.000001:
-                    if skNm not in self.lastShapeKeys:
-                        sk.keyframe_insert(data_path="value", frame=lastFrame)
-                        self.lastShapeKeys.add(skNm)
-                    sk.value = skVal
-                    sk.keyframe_insert(data_path="value", frame=thisFrame)
-                else:
-                    if skNm in self.lastShapeKeys:
-                        self.lastShapeKeys.remove(skNm)
+        for cobj in bpy.data.groups[self.geoGroup].objects:
+            if cobj.type == 'MESH':
+                if cobj.data.shape_keys is not None:
+                    for skNm in self.shapeKeys:
+                        sk = cobj.data.shape_keys.key_blocks.get(skNm)
+                        if sk is not None:
+                            skVal = self.shapeKeys[skNm]
+                            if abs(sk.value - skVal) > 0.000001:
+                                if skNm not in self.lastShapeKeys:
+                                    sk.keyframe_insert(
+                                        data_path="value", frame=lastFrame)
+                                    self.lastShapeKeys.add(skNm)
+                                sk.value = skVal
+                                sk.keyframe_insert(
+                                    data_path="value", frame=thisFrame)
+                            else:
+                                if skNm in self.lastShapeKeys:
+                                    self.lastShapeKeys.remove(skNm)
 
         if abs(self.arx - obj.rotation_euler[0]) > 0.000001:
             if not self.arxKey:
