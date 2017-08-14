@@ -63,15 +63,25 @@ class AddonRegisterTestCase(unittest.TestCase):
 
 
 class SimpleSimRunTestCase(unittest.TestCase):
-    def testSimpleGen(self):
+    def setUp(self):
+        self.play_animation = bpy.context.user_preferences.addons[
+            __package__].preferences.play_animation
+
         testfile = os.path.join(os.path.dirname(
             os.path.realpath(__file__)), "cm_testBase.blend")
-    
+
         with bpy.data.libraries.load(testfile) as (data_from, data_to):
             data_to.scenes = ["cmTesting"]
-        
+
         bpy.context.window.screen.scene = bpy.data.scenes["cmTesting"]
 
+        bpy.context.user_preferences.addons[__package__].preferences.play_animation = False
+
+    def tearDown(self):
+        bpy.context.user_preferences.addons[__package__].preferences.play_animation = self.play_animation
+        bpy.data.scenes.remove(bpy.data.scenes["cmTesting"], do_unlink=True)
+
+    def testSimpleGen(self):
         scene = bpy.context.scene
 
         ng = bpy.data.node_groups.new("simpleGen", "CrowdMasterAGenTreeType")
