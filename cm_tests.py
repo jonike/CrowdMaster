@@ -69,6 +69,8 @@ class SimpleSimRunTestCase(unittest.TestCase):
     
         with bpy.data.libraries.load(testfile) as (data_from, data_to):
             data_to.scenes = ["cmTesting"]
+        
+        bpy.context.window.screen.scene = bpy.data.scenes["cmTesting"]
 
         scene = bpy.context.scene
 
