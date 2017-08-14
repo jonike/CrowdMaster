@@ -112,7 +112,7 @@ class Simulation:
         preferences = bpy.context.user_preferences.addons[__package__].preferences
         if preferences.show_debug_options:
             t = time.time()
-            logger.debug("NEWFRAME", bpy.context.scene.frame_current)
+            logger.debug("NEWFRAME {}".format(bpy.context.scene.frame_current))
             if preferences.show_debug_timings:
                 if self.lastFrameTime is not None:
                     between = time.time() - self.lastFrameTime
