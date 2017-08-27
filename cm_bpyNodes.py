@@ -256,6 +256,11 @@ class NewInputNode(LogicNode):
                                         ("RX", "rx", "", 2),
                                         ("ARRIVED", "Arrived", "", 3)])
     EventName = StringProperty(name="Event Name")
+    EventOptions = EnumProperty(name="Event Options",
+                                items=[("duration", "Duration", "", 1),
+                                       ("elapsed", "Elapsed", "", 2),
+                                       ("control", "Control", "", 3)],
+                                default="control")
 
     AgentInfoOptions = EnumProperty(name="Agent Info Options",
                                     items=[("GETTAG", "Get Tag", "", 1),
@@ -319,6 +324,7 @@ class NewInputNode(LogicNode):
                     layout.prop(self, "TargetOptions")
             if self.WorldOptions == "EVENT":
                 layout.prop(self, "EventName")
+                layout.prop(self, "EventOptions")
         elif self.InputSource == "AGENTINFO":
             layout.prop(self, "AgentInfoOptions")
             if self.AgentInfoOptions == "GETTAG":
@@ -370,6 +376,7 @@ class NewInputNode(LogicNode):
                     node.settings["TargetOptions"] = self.TargetOptions
             if self.WorldOptions == "EVENT":
                 node.settings["EventName"] = self.EventName
+                node.settings["EventOptions"] = self.EventOptions
         elif self.InputSource == "AGENTINFO":
             node.settings["AgentInfoOptions"] = self.AgentInfoOptions
             node.settings["GetTagName"] = self.GetTagName
@@ -564,7 +571,8 @@ class FilterNode(LogicNode):
                                     ("GREATER", "Greater than", "", 4),
                                     ("LEAST", "Least only", "", 5),
                                     ("MOST", "Most only", "", 6),
-                                    ("AVERAGE", "Average", "", 7)])
+                                    ("AVERAGE", "Average", "", 7),
+                                    ("SUM", "Sum", "", 8)])
     Tag = BoolProperty(name="Tag", default=False)
     TagName = StringProperty(name="Tag Name", default="")
     Value = FloatProperty(name="Value", default=0.0)
@@ -657,6 +665,12 @@ class PrintNode(LogicNode):
         default=False,
     )
 
+    show_current_frame = BoolProperty(
+        name="Show Current Frame",
+        description="Show the curent frame when printing.",
+        default=True,
+    )
+
     output_filepath = StringProperty(
         name="Output Filepath",
         default="",
@@ -668,12 +682,14 @@ class PrintNode(LogicNode):
 
     def draw_buttons(self, context, layout):
         layout.prop(self, "Label")
+        layout.prop(self, "show_current_frame")
         layout.prop(self, "save_to_file")
         if self.save_to_file:
             layout.prop(self, "output_filepath")
 
     def getSettings(self, node):
         node.settings["Label"] = self.Label
+        node.settings["show_current_frame"] = self.show_current_frame
         node.settings["save_to_file"] = self.save_to_file
         node.settings["output_filepath"] = self.output_filepath
 
@@ -819,7 +835,8 @@ class ActionState(StateNode):
             else:
                 row.prop(self, "randomActionFromGroup", icon="FILE_REFRESH",
                          icon_only=True)
-        layout.prop(self, "overlap")
+        if self.actionName != "":
+            layout.prop(self, "overlap")
         layout.prop(self, "interuptState")
         if self.interuptState:
             layout.prop(self, "syncState")

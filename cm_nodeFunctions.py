@@ -215,7 +215,7 @@ class LogicNEWINPUT(Neuron):
             elif settings["WorldOptions"] == "TIME":
                 return {"None": channels["World"].time}
             elif settings["WorldOptions"] == "EVENT":
-                return world.event(settings["EventName"])
+                return world.event(settings["EventName"], settings["EventOptions"])
 
         elif settings["InputSource"] == "AGENTINFO":
             agent = channels["AgentInfo"]
@@ -514,6 +514,12 @@ class LogicFILTER(Neuron):
                     count += 1
             if count != 0:
                 result = {"None": total / count}
+        elif self.settings["Operation"] == "SUM":
+            total = 0
+            for into in inps:
+                for i in into:
+                    total += into[i]
+            result = {"None": total}
         return result
 
 
@@ -561,7 +567,7 @@ class LogicOUTPUT(Neuron):
             SmSquared = 0
             for into in inps:
                 for i in into:
-                    logger.debug("Val:", into[i])
+                    logger.debug("Val: {}".format(into[i]))
                     Sm += into[i]
                     SmSquared += into[i] * abs(into[i])  # To retain sign
             if Sm == 0:
@@ -627,13 +633,20 @@ class LogicPRINT(Neuron):
         if self.brain.userid in selected:
             for into in inps:
                 for i in into:
+                    if settings["show_current_frame"]:
+                        newframe = "NEWFRAME " + \
+                            str(bpy.context.scene.frame_current)
+                    else:
+                        newframe = ""
                     if settings["save_to_file"]:
                         with open(os.path.join(settings["output_filepath"], "CrowdMasterOutput.txt"), "a") as output:
-                            message = settings["Label"] + " >> " + \
+                            message = newframe + "\n" + \
+                                settings["Label"] + " >> " + \
                                 str(i) + " " + str(into[i]) + "\n"
                             output.write(message)
                     else:
-                        logger.info(settings["Label"], ">>", i, into[i])
+                        logger.info("{}\n{} >> {} {}".format(
+                            newframe, settings["Label"], i, into[i]))
         return 0
 
 

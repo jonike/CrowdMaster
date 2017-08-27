@@ -112,23 +112,45 @@ class Agent:
                 data_path="rotation_euler", frame=1)
 
         # Keyframe everything so agent return to the same position.
-        for obj in bpy.data.groups[self.geoGroup].objects:
-            if obj.type == "ARMATURE":
-                for bone in obj.pose.bones:
-                    bone.keyframe_insert("location")
-                    if bone.rotation_mode == "QUATERNION":
-                        bone.keyframe_insert("rotation_quaternion")
-                    elif bone.rotation_mode == "AXIS_ANGLE":
-                        bone.keyframe_insert("rotation_axis_angle")
-                    else:
-                        bone.keyframe_insert("rotation_euler")
-            obj.keyframe_insert("location")
-            if obj.rotation_mode == "QUATERNION":
-                obj.keyframe_insert("rotation_quaternion")
-            elif obj.rotation_mode == "AXIS_ANGLE":
-                obj.keyframe_insert("rotation_axis_angle")
-            else:
-                obj.keyframe_insert("rotation_euler")
+        if self.geoGroup is None or self.geoGroup == "":
+            # ie. manual agent
+            if self.rigOverwrite != "":
+                obj = objs[self.id]
+                if obj.type == "ARMATURE":
+                    for bone in obj.pose.bones:
+                        bone.keyframe_insert("location")
+                        if bone.rotation_mode == "QUATERNION":
+                            bone.keyframe_insert("rotation_quaternion")
+                        elif bone.rotation_mode == "AXIS_ANGLE":
+                            bone.keyframe_insert("rotation_axis_angle")
+                        else:
+                            bone.keyframe_insert("rotation_euler")
+                obj.keyframe_insert("location")
+                if obj.rotation_mode == "QUATERNION":
+                    obj.keyframe_insert("rotation_quaternion")
+                elif obj.rotation_mode == "AXIS_ANGLE":
+                    obj.keyframe_insert("rotation_axis_angle")
+                else:
+                    obj.keyframe_insert("rotation_euler")
+        else:
+            # ie. auto generated agent
+            for obj in bpy.data.groups[self.geoGroup].objects:
+                if obj.type == "ARMATURE":
+                    for bone in obj.pose.bones:
+                        bone.keyframe_insert("location")
+                        if bone.rotation_mode == "QUATERNION":
+                            bone.keyframe_insert("rotation_quaternion")
+                        elif bone.rotation_mode == "AXIS_ANGLE":
+                            bone.keyframe_insert("rotation_axis_angle")
+                        else:
+                            bone.keyframe_insert("rotation_euler")
+                obj.keyframe_insert("location")
+                if obj.rotation_mode == "QUATERNION":
+                    obj.keyframe_insert("rotation_quaternion")
+                elif obj.rotation_mode == "AXIS_ANGLE":
+                    obj.keyframe_insert("rotation_axis_angle")
+                else:
+                    obj.keyframe_insert("rotation_euler")
 
         if preferences.show_debug_options and preferences.show_debug_timings:
             cm_timings.agent["init"] += time.time() - t
@@ -148,8 +170,8 @@ class Agent:
             if preferences.show_debug_timings:
                 cm_timings.agent["brainExecute"] += time.time() - t
             if objs[self.id].select:
-                logger.debug("ID: ", self.id, "Tags: ", self.brain.tags,
-                             "outvars: ", self.brain.outvars)
+                logger.debug("ID: {} Tags: {} outvars: {}".format(
+                    self.id, self.brain.tags, self.brain.outvars))
             # TODO show this in the UI
         if preferences.show_debug_options:
             t = time.time()
@@ -226,7 +248,12 @@ class Agent:
         lastFrame = bpy.context.scene.frame_current - 1
         thisFrame = bpy.context.scene.frame_current
 
-        for cobj in bpy.data.groups[self.geoGroup].objects:
+        if self.geoGroup is None or self.geoGroup == "":
+            grpObjs = [obj]
+        else:
+            grpObjs = bpy.data.groups[self.geoGroup].objects
+
+        for cobj in grpObjs:
             if cobj.type == 'MESH':
                 if cobj.data.shape_keys is not None:
                     for skNm in self.shapeKeys:
